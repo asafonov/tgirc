@@ -1,18 +1,25 @@
-import setuptools
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+from tgirc.version import version
 
-setuptools.setup(
-    name="telegram-irc",
-    version="0.1",
-    author="Alexander Safonov",
-    author_email="me@asafonov.org",
-    description="Telegram to irc bridge",
-    license="GPL3",
-    install_requires=[
-        "Telethon==1.24.0"
-    ],
-    entry_points={
+config = {
+    'description': 'Telegram to irc bridge',
+    'version': version,
+    'packages': ['tgirc'],
+    'scripts': [],
+    'name': 'tgirc',
+    'license': 'GPL3',
+    'author': 'Alexander Safonov',
+    'author_email': 'me@asafonov.org',
+    'install_requires': ['Telethon==1.24.0'],
+    'entry_points': {
         'console_scripts': [
-            'telegramirc=telegramirc.__main__:main',
+            'tgirc = tgirc.__main__:main',
+            'tgirc-init = tgirc.__main__:init'
         ]
-    }
-)
+    },
+}
+
+setup(**config)
