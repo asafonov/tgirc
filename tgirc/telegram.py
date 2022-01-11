@@ -8,7 +8,7 @@ messages = []
 seen_messages = {}
 
 @client.on(events.NewMessage)
-async def ololo(event):
+async def new_message_handler(event):
     global seen_messages
 
     if event.id in seen_messages:
@@ -18,10 +18,14 @@ async def ololo(event):
     chat = await event.get_chat()
     sender = await event.get_sender()
     message = event.raw_text
+    username = sender.username if sender.username is not None else sender.phone
+
+    if username is None:
+        username = str(sender.first_name) + ' ' + str(sender.last_name)
 
     if not sender.is_self:
-        messages.append([sender.username, message])
-        print('< ' + str(sender.username) + ': ' + str(message))
+        messages.append([username, message])
+        print('< ' + username + ': ' + message)
 
 async def _send(to, msg):
     await client.send_message(to, msg)
