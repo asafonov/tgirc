@@ -29,8 +29,10 @@ def start(privmsg, get_messages):
 
                 if len(messages) > 0:
                     for i in range(len(messages)):
-                        command = ':' + messages[i][0] + ' PRIVMSG ' + messages[i][0] + ' :' + messages[i][1]
-                        client_connection.sendall((command + '\n').encode('utf-8'))
+                        body = messages[i][1].split('\n')
+                        for j in range(len(body)):
+                            command = ':' + messages[i][0] + ' PRIVMSG ' + messages[i][0] + ' :' + body[j]
+                            client_connection.sendall((command + '\n').encode('utf-8'))
 
             if time.time() - last_ping > 300:
                 last_ping = time.time()
