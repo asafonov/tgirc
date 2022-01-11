@@ -33,6 +33,9 @@ async def _send(to, msg):
 def send(to, msg):
     loop.run_until_complete(_send(to, msg))
 
+def disconnect():
+    client.disconnect()
+
 def check_messages():
     global messages
     ret = messages

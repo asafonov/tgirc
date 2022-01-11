@@ -1,7 +1,7 @@
 import tgirc.utils
 import socket, select, time
 
-def start(privmsg, get_messages):
+def start(privmsg, get_messages, disconnect):
     HOST = tgirc.utils.get_env_value('HOST', '127.0.0.1')
     PORT = int(tgirc.utils.get_env_value('PORT', 9099))
     NICK = tgirc.utils.get_env_value('NICK', 'tgirc')
@@ -54,6 +54,8 @@ def start(privmsg, get_messages):
             if len(req_s[i]) > 0:
                 print('> ' + req_s[i])
                 req_s[i] = req_s[i].replace('\r', '')
+            if req_s[i][0:4] == 'QUIT':
+                disconnect()
             if req_s[i][0:4] == 'NICK':
                 _nick = req_s[i][5:]
             if req_s[i][0:4] == 'PASS':
