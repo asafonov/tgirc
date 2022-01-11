@@ -24,12 +24,13 @@ def start(privmsg, get_messages):
         ready = select.select([client_connection], [], [], 5)
 
         if not ready[0]:
-            messages = get_messages()
+            if _authorized:
+                messages = get_messages()
 
-            if len(messages) > 0:
-                for i in range(len(messages)):
-                    command = ':' + messages[i][0] + ' PRIVMSG ' + messages[i][0] + ' :' + messages[i][1]
-                    client_connection.sendall((command + '\n').encode('utf-8'))
+                if len(messages) > 0:
+                    for i in range(len(messages)):
+                        command = ':' + messages[i][0] + ' PRIVMSG ' + messages[i][0] + ' :' + messages[i][1]
+                        client_connection.sendall((command + '\n').encode('utf-8'))
 
             if time.time() - last_ping > 300:
                 last_ping = time.time()
