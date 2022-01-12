@@ -16,6 +16,18 @@ sudo python3 setup.py install
 
 That's it, now you can use it
 
+Configuration
+-------------
+
+To start using `tgirc`you need to get `api_id` and `api_hash` for the application:
+
+* Login to [your Telegram account](https://my.telegram.org)
+* Select API Development Tools
+* Create new application. Remember that your `api_hash` is secret
+
+Copy `config.example` as `~/.config/tgirc/config`
+Edit `~/.config/tgirc/config` filling it with proper values
+
 Usage
 -----
 
@@ -40,7 +52,7 @@ servers = (
 );
 ```
 
-By default tgirc can't be accessed only from 127.0.0.1 ip address on port 9099. To change the default behaviour you need to define environment variables to override default settings. So if you want to make tgirc accessable from everywhere on port `8000` with `admin` nick and `password` password you do the following:
+By default tgirc can't be accessed only from `127.0.0.1` ip address on port `9099. To change the default behaviour you need to define environment variables to override default settings. So if you want to make tgirc accessable from everywhere on port `8000` with `admin` nick and `password` password you do the following:
 
 ```bash
 export TGIRC_HOST=0.0.0.0

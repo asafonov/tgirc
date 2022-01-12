@@ -10,7 +10,7 @@ config = {
     'packages': ['tgirc'],
     'scripts': [],
     'name': 'tgirc',
-    'license': 'GPL3',
+    'license': 'MIT',
     'author': 'Alexander Safonov',
     'author_email': 'me@asafonov.org',
     'install_requires': ['Telethon==1.24.0'],
