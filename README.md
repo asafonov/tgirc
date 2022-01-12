@@ -9,9 +9,9 @@ Installation
 Installation is pretty straightforward for a python3 application:
 
 ```bash
-  git clone https://github.com/asafonov/tgirc
-  cd tgirc
-  sudo python3 setup.py install
+git clone https://github.com/asafonov/tgirc
+cd tgirc
+sudo python3 setup.py install
 ```
 
 That's it, now you can use it
@@ -24,8 +24,8 @@ First you need to login to your telegram account. To do it use `tgirc-init` comm
 When you're done with registering your tgirc application, you may run it with `tgirc` command.
 
 ```bash
-  (venv) asafonov@isengard:~$ tgirc
-  Starting tgirc on 127.0.0.1:9099 ...
+(venv) asafonov@isengard:~$ tgirc
+Starting tgirc on 127.0.0.1:9099 ...
 ```
 
 If you see something like this, you may connect to your localhost machine on port 9099 with your irc client to use it. You need to login to tgirc server. By default nick is `tgirc` and password is `tgirc`. Here is and example for `irssi`:
