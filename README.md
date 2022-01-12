@@ -52,7 +52,7 @@ servers = (
 );
 ```
 
-By default tgirc can't be accessed only from `127.0.0.1` ip address on port `9099. To change the default behaviour you need to define environment variables to override default settings. So if you want to make tgirc accessable from everywhere on port `8000` with `admin` nick and `password` password you do the following:
+By default tgirc can't be accessed only from `127.0.0.1` ip address on port `9099`. To change the default behaviour you need to define environment variables to override default settings. So if you want to make tgirc accessable from everywhere on port `8000` with `admin` nick and `password` password you do the following:
 
 ```bash
 export TGIRC_HOST=0.0.0.0
