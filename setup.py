@@ -16,8 +16,7 @@ config = {
     'install_requires': ['Telethon==1.24.0'],
     'entry_points': {
         'console_scripts': [
-            'tgirc = tgirc.__main__:main',
-            'tgirc-init = tgirc.__main__:init'
+            'tgirc = tgirc.__main__:main'
         ]
     },
 }

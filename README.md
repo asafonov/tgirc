@@ -31,9 +31,9 @@ Edit `~/.config/tgirc/config` filling it with proper values
 Usage
 -----
 
-First you need to login to your telegram account. To do it use `tgirc-init` command. Just follow the instructions there. You will be asked for you telegram phone number and OTP code. Please note that 2FA and QR-Code auth currently not supported.
+First you need to login to your telegram account. To do it use `tgirc` command. Just follow the instructions there. You will be asked for you telegram phone number and OTP code. Please note that 2FA and QR-Code auth currently not supported.
 
-When you're done with registering your tgirc application, you may run it with `tgirc` command.
+When you're done with registering your tgirc application it will start automatically right after registration
 
 ```bash
 (venv) asafonov@isengard:~$ tgirc
