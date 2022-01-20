@@ -56,7 +56,6 @@ def start(privmsg, get_messages, disconnect):
                 print('> ' + req_s[i])
                 req_s[i] = req_s[i].replace('\r', '')
             if req_s[i][0:4] == 'QUIT':
-                disconnect()
                 _quit = True
             if req_s[i][0:4] == 'NICK':
                 _nick = req_s[i][5:]
