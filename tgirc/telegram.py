@@ -16,16 +16,25 @@ async def new_message_handler(event):
 
     seen_messages[event.id] = True
     chat = await event.get_chat()
+    is_group = False
+
+    try:
+      is_group = chat.participants_count > 0
+    except AttributeError:
+      is_group = False
+
     sender = await event.get_sender()
     message = event.raw_text
     username = sender.username if sender.username is not None else sender.phone
 
     if username is None:
-        username = str(sender.first_name) + ' ' + str(sender.last_name)
+        username = sender.id
 
-    if not sender.is_self:
-        messages.append([username, message])
-        print('< ' + username + ': ' + message)
+    if not sender.is_self or is_group:
+        msg_username = chat.title.replace(' ', '_') if is_group else username
+        msg_message = username + '> ' + message if is_group else message
+        messages.append([msg_username, msg_message])
+        print('< ' + msg_username + ': ' + msg_message)
 
 async def _send(to, msg):
     await client.send_message(to, msg)
