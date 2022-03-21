@@ -32,7 +32,7 @@ async def new_message_handler(event):
 
     if not sender.is_self or is_group:
         msg_username = 'chat' + str(chat.id) if is_group else str(username)
-        msg_message = str(username) + '> ' + str(message) if is_group else str(message)
+        msg_message = '<' + chat.title + ':' + str(username) + '> ' + str(message) if is_group else str(message)
         messages.append([msg_username, msg_message])
         print('< ' + msg_username + ': ' + msg_message)
 
