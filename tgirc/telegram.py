@@ -31,17 +31,16 @@ async def new_message_handler(event):
         username = 'id' + str(sender.id)
 
     if not sender.is_self or is_group:
-        msg_username = 'chat' + str(chat.id) if is_group else str(username)
-        msg_message = '<' + chat.title + ':' + str(username) + '> ' + str(message) if is_group else str(message)
-        messages.append([msg_username, msg_message])
-        print('< ' + msg_username + ': ' + msg_message)
+        msg_username = '#' + str(chat.id) if is_group else str(username)
+        msg_message = '<' + chat.title + '> ' + str(message) if is_group else str(message)
+        messages.append([str(username), msg_username, msg_message])
 
 async def _send(to, msg):
     if to[0:2] == 'id':
         to = int(to[2:])
 
-    if to[0:4] == 'chat':
-        to = int(to[4:])
+    if to[0:1] == '#':
+        to = int(to[1:])
 
     await client.send_message(to, msg)
 

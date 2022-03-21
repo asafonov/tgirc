@@ -20,6 +20,7 @@ def start(privmsg, get_messages, disconnect):
     _pass = ''
     _authorized = False
     _quit = False
+    _channels = {}
 
     while True:
         ready = select.select([client_connection], [], [], 5)
@@ -30,10 +31,18 @@ def start(privmsg, get_messages, disconnect):
 
                 if len(messages) > 0:
                     for i in range(len(messages)):
-                        body = messages[i][1].split('\n')
+                        body = messages[i][2].split('\n')
                         for j in range(len(body)):
-                            command = ':' + messages[i][0] + ' PRIVMSG ' + messages[i][0] + ' :' + body[j]
+                            command = ':' + messages[i][0] + ' PRIVMSG ' + messages[i][1] + ' :' + body[j]
+
+                            if messages[i][0] != messages[i][1] and messages[i][1] not in _channels:
+                                join_command = 'JOIN ' + messages[i][1]
+                                client_connection.sendall((join_command + '\n').encode('utf-8'))
+                                _channels[messages[i][1]] = True
+                                print(join_command)
+
                             client_connection.sendall((command + '\n').encode('utf-8'))
+                            print(command)
 
             if time.time() - last_ping > 300:
                 last_ping = time.time()
