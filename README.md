@@ -1,7 +1,7 @@
 tgirc
 =====
 
-tgirc is a bridge between telegram and irc so you can chat with your friends on telegram using your favorite irc client. No group chats currently supported but I'm going to implement it in the nearest future.
+tgirc is a bridge between telegram and irc so you can chat with your friends on telegram using your favorite irc client.
 
 Installation
 ------------
@@ -52,7 +52,7 @@ servers = (
 );
 ```
 
-By default tgirc can't be accessed only from `127.0.0.1` ip address on port `9099`. To change the default behaviour you need to define environment variables to override default settings. So if you want to make tgirc accessable from everywhere on port `8000` with `admin` nick and `password` password you do the following:
+By default tgirc can be accessed only from `127.0.0.1` ip address on port `9099`. To change the default behaviour you need to define environment variables to override default settings. So if you want to make tgirc accessable from everywhere on port `8000` with `admin` nick and `password` password you do the following:
 
 ```bash
 export TGIRC_HOST=0.0.0.0
