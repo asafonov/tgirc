@@ -10,6 +10,7 @@ seen_messages = {}
 @client.on(events.NewMessage)
 async def new_message_handler(event):
     global seen_messages
+    global messages
 
     if event.id in seen_messages:
         return
