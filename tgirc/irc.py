@@ -44,7 +44,7 @@ def start(privmsg, get_messages, disconnect):
                             client_connection.sendall((command + '\n').encode('utf-8'))
                             print(command)
 
-            if time.time() - last_ping > 300:
+            if time.time() - last_ping > 60:
                 last_ping = time.time()
                 client_connection.sendall(('PING ' + str(time.time()) + '\n').encode('utf-8'))
 

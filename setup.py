@@ -13,7 +13,7 @@ config = {
     'license': 'MIT',
     'author': 'Alexander Safonov',
     'author_email': 'me@asafonov.org',
-    'install_requires': ['Telethon==1.24.0'],
+    'install_requires': ['Telethon==1.27.0'],
     'entry_points': {
         'console_scripts': [
             'tgirc = tgirc.__main__:main'
