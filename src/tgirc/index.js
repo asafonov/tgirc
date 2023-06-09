@@ -26,7 +26,7 @@ const init = () => {
     })
   } else {
     const apiHash = config.get('apiHash')
-    telegram.init(apiId, apiHash)
+    telegram.init(parseInt(apiId), apiHash)
   }
 }
 
