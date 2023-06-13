@@ -3,6 +3,7 @@ const {StringSession} = require('telegram/sessions')
 const {NewMessage} = require('telegram/events')
 const input = require('input')
 const cache = require('../config').init('cache')
+const config = require('../config').init()
 let client
 
 const getMessage = async message => {
@@ -17,7 +18,23 @@ const getMessage = async message => {
   }
 }
 
-const init = async (apiId, apiHash, callbacks) => {
+const initApi = async () => {
+  let apiId = config.get('apiId')
+  let apiHash = config.get('apiHash')
+
+  if (! apiId) {
+    apiId = await input.text('api id: ')
+    apiHash = await input.text('api hash: ')
+    config.set('apiId', parseInt(apiId))
+    config.set('apiHash', apiHash)
+    config.save()
+  }
+
+  return [apiId, apiHash]
+}
+
+const init = async (callbacks) => {
+  const [apiId, apiHash] = await initApi()
   const session = new StringSession(cache.get('session') || '')
   client = new TelegramClient(session, apiId, apiHash, {connectionRetries: 5})
   await client.start({
