@@ -23,9 +23,9 @@ const initApi = async () => {
   let apiHash = config.get('apiHash')
 
   if (! apiId) {
-    apiId = await input.text('api id: ')
+    apiId = await parseInt(input.text('api id: '))
     apiHash = await input.text('api hash: ')
-    config.set('apiId', parseInt(apiId))
+    config.set('apiId', apiId)
     config.set('apiHash', apiHash)
     config.save()
   }
@@ -33,7 +33,7 @@ const initApi = async () => {
   return [apiId, apiHash]
 }
 
-const init = async (callbacks) => {
+const init = async callbacks => {
   const [apiId, apiHash] = await initApi()
   const session = new StringSession(cache.get('session') || '')
   client = new TelegramClient(session, apiId, apiHash, {connectionRetries: 5})
