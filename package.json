@@ -2,5 +2,31 @@
   "dependencies": {
     "input": "^1.0.1",
     "telegram": "^2.17.4"
-  }
+  },
+  "name": "tgirc",
+  "description": "tgirc is a bridge between telegram and irc so you can chat with your friends on telegram using your favorite irc client.",
+  "version": "0.1.1",
+  "main": "app.js",
+  "devDependencies": {},
+  "bin": {
+    "stille": "./app.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asafonov/tgirc.git"
+  },
+  "keywords": [
+    "telegram",
+    "irc",
+    "cli"
+  ],
+  "author": "Alexander Safonov <me@asafonov.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asafonov/tgirc/issues"
+  },
+  "homepage": "https://github.com/asafonov/tgirc#readme"
 }
