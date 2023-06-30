@@ -12,8 +12,8 @@ const getMessage = async message => {
   return {
     text: message.text,
     sender: sender.username || sender.phone || sender.id,
-    title: chat.title,
-    chatId: chat.id + '',
+    title: chat?.title,
+    chatId: chat?.id + '',
     self: sender.self
   }
 }
@@ -49,10 +49,8 @@ const init = async callbacks => {
     const message = await getMessage(event.message)
 
     if (callbacks && callbacks.onMessage) {
-      callbacks.onMessage(message)
+      callbacks.onMessage(message.sender, message.text)
     }
-
-    console.log(message)
   }, new NewMessage({}))
 }
 
