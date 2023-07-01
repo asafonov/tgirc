@@ -34,11 +34,11 @@ const welcome = () => {
 
 const commands = {
   PASS: line => {
-    pass = line.substr(5)
+    pass = line.substr(5).replace('\r', '')
     isAuthorized() && welcome()
   },
   NICK: line => {
-    nick = line.substr(5)
+    nick = line.substr(5).replace('\r', '')
     isAuthorized() && welcome()
   },
   PRIVMSG: line => {

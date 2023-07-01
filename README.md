@@ -6,7 +6,7 @@ tgirc is a bridge between telegram and irc so you can chat with your friends on 
 Installation
 ------------
 
-Installation is pretty straightforward for a python3 application:
+Installation is pretty straightforward for a nodejs application:
 
 ```bash
 npm install tgirc
