@@ -35,7 +35,7 @@ asafonov@isengard:~$ tgirc
 tgirc started on 127.0.0.1:9099
 ```
 
-If you see something like this, you may connect to your localhost machine on port 9099 with your irc client to use it. You need to login to tgirc server. By default nick is `tgirc` and password is `tgirc`. Here is and example for `irssi`:
+If you see something like this, you may connect to your localhost machine. Here is and example for `irssi`:
 
 ```
 servers = (
