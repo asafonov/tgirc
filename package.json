@@ -5,7 +5,7 @@
   },
   "name": "tgirc",
   "description": "tgirc is a bridge between telegram and irc so you can chat with your friends on telegram using your favorite irc client.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "app.js",
   "devDependencies": {},
   "bin": {
