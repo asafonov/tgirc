@@ -5,6 +5,7 @@ let callbacks
 let client
 let pass
 let nick
+let rooms = {}
 const isAuthorized = () => pass === config.get('password') && nick === config.get('login')
 
 const initSettings = async () => {
@@ -44,7 +45,7 @@ const commands = {
   PRIVMSG: line => {
     line = line.substr(8)
     const data = line.split(':').map(i => i.trim())
-    const to = data[0]
+    const to = data[0].replace('#', '')
     const msg = data[1]
     to !== nick && callbacks.onMessage(to, msg)
   },
@@ -71,6 +72,13 @@ const parseData = data => {
 
 const sendMessage = (from, msg, chat) => {
   const messages = msg.split('\n')
+
+  if (chat && ! rooms[chat]) {
+    rooms[chat] = true
+    const join = `JOIN ${chat}\n`
+    console.log(`< ${join}`)
+    client && client.write(join)
+  }
 
   for (let i = 0; i < messages.length; ++i) {
     const message = `:${from} PRIVMSG ${chat || from} :${messages[i]}\n`

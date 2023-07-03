@@ -48,8 +48,8 @@ const init = async callbacks => {
   client.addEventHandler(async event => {
     const message = await getMessage(event.message)
 
-    if (callbacks && callbacks.onMessage) {
-      callbacks.onMessage(message.sender, message.text)
+    if (callbacks && callbacks.onMessage && ! message.self) {
+      callbacks.onMessage(message.sender, message.text, message.title ? `#${message.chatId}` : false)
     }
   }, new NewMessage({}))
 }
