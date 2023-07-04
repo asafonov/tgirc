@@ -96,6 +96,10 @@ const listener = socket => {
   socket.on('error', error => {
     console.error('ERROR', error)
   })
+  setInterval(() => {
+    socket.write(`PING ${new Date().getTime()}\n`)
+  }, 300000)
+
 }
 
 const initServer = () => {
