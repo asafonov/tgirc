@@ -2,11 +2,9 @@ const input = require('input')
 const config = require('../config').init()
 const net = require('net')
 let callbacks
-let client
-let pass
-let nick
+let clients = {}
 let rooms = {}
-const isAuthorized = () => pass === config.get('password') && nick === config.get('login')
+const isAuthorized = socket => clients[socket].pass === config.get('password') && clients[socket].nick === config.get('login')
 
 const initSettings = async () => {
   let login = config.get('login')
@@ -29,32 +27,32 @@ const initSettings = async () => {
   return [login, password, host, port]
 }
 
-const welcome = () => {
-  client.write(`375 ${nick} :- Welcome to tgirc\n`)
+const welcome = socket => {
+  clients[socket].socket.write(`375 ${clients[socket].nick} :- Welcome to tgirc\n`)
 }
 
 const commands = {
-  PASS: line => {
-    pass = line.substr(5).replace('\r', '')
-    isAuthorized() && welcome()
+  PASS: (line, socket) => {
+    clients[socket].pass = line.substr(5).replace('\r', '')
+    isAuthorized(socket) && welcome(socket)
   },
-  NICK: line => {
-    nick = line.substr(5).replace('\r', '')
-    isAuthorized() && welcome()
+  NICK: (line, socket) => {
+    clients[socket].nick = line.substr(5).replace('\r', '')
+    isAuthorized(socket) && welcome(socket)
   },
-  PRIVMSG: line => {
+  PRIVMSG: (line, socket) => {
     line = line.substr(8)
     const data = line.split(':').map(i => i.trim())
     const to = data[0].replace('#', '')
     const msg = data[1]
-    to !== nick && callbacks.onMessage(to, msg)
+    to !== clients[socket].nick && callbacks.onMessage(to, msg)
   },
-  QUIT: () => {
-    client.destroy()
+  QUIT: (line, socket) => {
+    clients[socket].socket.destroy()
   }
 }
 
-const parseData = data => {
+const parseData = (data, socket) => {
   const lines = data.split('\n')
 
   for (let i = 0; i < lines.length; ++i) {
@@ -64,9 +62,15 @@ const parseData = data => {
       command && (command = command[0])
 
       if (command && command in commands) {
-        commands[command](lines[i])
+        commands[command](lines[i], socket)
       }
     }
+  }
+}
+
+const sendToClients = command => {
+  for (let i in clients) {
+    isAuthorized(i) && clients[i].socket.write(command)
   }
 }
 
@@ -77,21 +81,22 @@ const sendMessage = (from, msg, chat) => {
     rooms[chat] = true
     const join = `JOIN ${chat}\n`
     console.log(`< ${join}`)
-    client && client.write(join)
+    sendToClients(join)
   }
 
   for (let i = 0; i < messages.length; ++i) {
     const message = `:${from} PRIVMSG ${chat || from} :${messages[i]}\n`
-    client && client.write(message)
+    sendToClients(message)
     console.log(`< ${message}`)
   }
 }
 
 const listener = socket => {
-  console.log(`New connection from ${socket.remoteAddress}:${socket.remotePort}`)
-  client = socket
+  const socketStr = `${socket.remoteAddress}:${socket.remotePort}`
+  console.log(`New connection from ${socketStr}`)
+  clients[socketStr] = {socket: socket}
   socket.on('data', data => {
-    parseData(data.toString())
+    parseData(data.toString(), socketStr)
   })
   socket.on('error', error => {
     console.error('ERROR', error)
