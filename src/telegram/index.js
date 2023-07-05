@@ -55,7 +55,11 @@ const init = async callbacks => {
 }
 
 const sendMessage = (to, message) => {
-  client.sendMessage(to, {message: message})
+  if (message.substr(0, 6) === 'upload') {
+    client.sendFile(to, {file: message.substr(7)})
+  } else {
+    client.sendMessage(to, {message: message})
+  }
 }
 
 module.exports = {
