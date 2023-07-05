@@ -45,7 +45,7 @@ const commands = {
     const data = line.split(':').map(i => i.trim())
     const to = data[0].replace('#', '')
     const msg = data[1]
-    to !== clients[socket].nick && callbacks.onMessage(to, msg)
+    isAuthorized(socket) && to !== clients[socket].nick && callbacks.onMessage(to, msg)
   },
   QUIT: (line, socket) => {
     clients[socket].socket.destroy()
