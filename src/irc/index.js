@@ -104,6 +104,13 @@ const listener = socket => {
   setInterval(() => {
     socket.write(`PING ${new Date().getTime()}\n`)
   }, 300000)
+  setTimeout(() => {
+    if (! isAuthorized(socketStr)) {
+      console.log(`Disconnecting ${socketStr}`)
+      socket.destroy()
+      delete clients[socketStr]
+    }
+  }, 3000)
 
 }
 
