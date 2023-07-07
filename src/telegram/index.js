@@ -23,8 +23,9 @@ const initApi = async () => {
   let apiHash = config.get('apiHash')
 
   if (! apiId) {
-    apiId = await parseInt(input.text('api id: '))
+    apiId = await input.text('api id: ')
     apiHash = await input.text('api hash: ')
+    let apiId = parseInt(apiId)
     config.set('apiId', apiId)
     config.set('apiHash', apiHash)
     config.save()
