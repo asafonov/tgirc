@@ -5,14 +5,21 @@ const input = require('input')
 const cache = require('../config').init('cache')
 const config = require('../config').init()
 let client
+const chatCache = {}
 
 const getMessage = async message => {
   const sender = await message.getSender()
   const chat = await message.getChat()
+  const chatTitle = chat?.title ? chat.title.replace(' ', '_').replace(':', '_') : ''
+  const senderId = sender.username || sender.phone || sender.id
+  const chatKey = chatTitle || senderId
+
+  if (chat?.id) chatCache[chatKey] = chat.id
+
   return {
     text: message.text,
-    sender: sender.username || sender.phone || sender.id,
-    title: chat?.title,
+    sender: senderId,
+    title: chatTitle,
     chatId: chat?.id + '',
     self: sender.self
   }
@@ -50,16 +57,18 @@ const init = async callbacks => {
     const message = await getMessage(event.message)
 
     if (callbacks && callbacks.onMessage && ! message.self) {
-      callbacks.onMessage(message.sender, message.text, message.title ? `#${message.chatId}` : false)
+      callbacks.onMessage(message.sender, message.text, message.title ? `#${message.title}` : false)
     }
   }, new NewMessage({}))
 }
 
 const sendMessage = (to, message) => {
+  const address = chatCache[to] || to
+
   if (message.substr(0, 6) === 'upload') {
-    client.sendFile(to, {file: message.substr(7)})
+    client.sendFile(address, {file: message.substr(7)})
   } else {
-    client.sendMessage(to, {message: message})
+    client.sendMessage(address, {message: message})
   }
 }
 
