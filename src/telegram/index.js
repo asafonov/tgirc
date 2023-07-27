@@ -10,7 +10,7 @@ const chatCache = {}
 const getMessage = async message => {
   const sender = await message.getSender()
   const chat = await message.getChat()
-  const chatTitle = chat?.title ? chat.title.replace(' ', '_').replace(':', '_') : ''
+  const chatTitle = chat?.title ? chat.title.replace(/ /g, '_').replace(/\:/g, '_') : ''
   const senderId = sender.username || sender.phone || sender.id
   const chatKey = chatTitle || senderId
 
