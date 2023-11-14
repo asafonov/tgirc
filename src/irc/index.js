@@ -33,7 +33,8 @@ const welcome = socket => {
 
 const commands = {
   PASS: (line, socket) => {
-    clients[socket].pass = line.substr(5).replace('\r', '')
+    const index = line.indexOf(':') + 1 || 5
+    clients[socket].pass = line.substr(index).replace('\r', '')
     isAuthorized(socket) && welcome(socket)
   },
   NICK: (line, socket) => {
