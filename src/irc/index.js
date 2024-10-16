@@ -29,6 +29,12 @@ const initSettings = async () => {
 
 const welcome = socket => {
   clients[socket].socket.write(`375 ${clients[socket].nick} :- Welcome to tgirc\n`)
+
+  for (let chat in rooms) {
+    const join = `JOIN ${chat}\n`
+    console.log(`< ${join}`)
+    clients[socket].socket.write(join)
+  }
 }
 
 const commands = {
@@ -50,6 +56,7 @@ const commands = {
   },
   QUIT: (line, socket) => {
     clients[socket].socket.destroy()
+    delete clients[socket]
   }
 }
 
@@ -101,6 +108,13 @@ const listener = socket => {
   })
   socket.on('error', error => {
     console.error('ERROR', error)
+    socket.destroy()
+    delete clients[socketStr]
+  })
+  socket.on('close', () => {
+    console.log(`Closing connection for ${socketStr}`)
+    socket.destroy()
+    delete clients[socketStr]
   })
   setInterval(() => {
     socket.write(`PING ${new Date().getTime()}\n`)
