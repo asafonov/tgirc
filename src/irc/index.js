@@ -4,7 +4,7 @@ const net = require('net')
 let callbacks
 let clients = {}
 let rooms = {}
-const isAuthorized = socket => clients[socket].pass === config.get('password') && clients[socket].nick === config.get('login')
+const isAuthorized = socket => clients[socket] && clients[socket].pass === config.get('password') && clients[socket].nick === config.get('login')
 
 const initSettings = async () => {
   let login = config.get('login')
