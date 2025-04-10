@@ -49,9 +49,9 @@ const commands = {
   },
   PRIVMSG: (line, socket) => {
     line = line.substr(8)
-    const data = line.split(':').map(i => i.trim())
-    const to = data[0].replace('#', '')
-    const msg = data[1]
+    const data = line.split(':')
+    const to = data[0].trim().replace('#', '')
+    const msg = data.splice(1).join(':')
     isAuthorized(socket) && to !== clients[socket].nick && callbacks.onMessage(to, msg)
   },
   QUIT: (line, socket) => {
