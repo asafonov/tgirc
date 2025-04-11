@@ -51,7 +51,7 @@ const commands = {
     line = line.substr(8)
     const i = line.indexOf(':')
     const to = line.substr(0, i).trim().replace('#', '')
-    const msg = line.substr(i + 1)
+    const msg = line.substr(i + 1).trimEnd()
     isAuthorized(socket) && to !== clients[socket].nick && callbacks.onMessage(to, msg)
   },
   QUIT: (line, socket) => {
