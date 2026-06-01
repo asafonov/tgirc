@@ -4,6 +4,7 @@ const {NewMessage} = require('telegram/events')
 const input = require('input')
 const cache = require('../config').init('cache')
 const config = require('../config').init()
+const alias = require('../config').init('alias')
 let client
 const chatCache = {}
 
@@ -63,10 +64,14 @@ const init = async callbacks => {
 }
 
 const sendMessage = (to, message) => {
-  const address = chatCache[to] || to
+  const address = alias.get(to) || chatCache[to] || to
 
   if (message.substr(0, 6) === 'upload') {
     client.sendFile(address, {file: message.substr(7)})
+  } else if (message.substr(0, 5) === 'alias') {
+    const a = message.substr(6)
+    alias.set(a, address)
+    alias.save()
   } else {
     client.sendMessage(address, {message: message})
   }
