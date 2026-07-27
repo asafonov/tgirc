@@ -17,8 +17,10 @@ const getMessage = async message => {
 
   if (chat?.id) chatCache[chatKey] = chat.id
 
+  const text = message.text || message.richMessage?.blocks?.map(i => i.text?.text).join('\n') || ''
+
   return {
-    text: message.text,
+    text,
     sender: senderId,
     title: chatTitle,
     chatId: chat?.id + '',
