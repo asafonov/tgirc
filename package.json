@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "input": ">=1.0.1",
-    "telegram": ">=2.17.4"
+    "teleproto": ">=1.228.4"
   },
   "name": "tgirc",
   "description": "tgirc is a bridge between telegram and irc so you can chat with your friends on telegram using your favorite irc client.",
   "version": "0.8.0",
   "main": "app.js",
-  "devDependencies": {},
   "bin": {
     "tgirc": "./app.js"
   },
