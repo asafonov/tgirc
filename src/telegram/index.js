@@ -10,6 +10,7 @@ const chatCache = {}
 
 const getTextFromText = text => {
   if (text.className === 'TextPlain') return text.text
+  if (text.className === 'TextMath') return '`' + text.source + '`'
   if (text.className === 'TextBold') return `**${getTextFromText(text.text)}**`
   if (text.className === 'TextItalic') return `*${getTextFromText(text.text)}*`
   if (text.className === 'TextFixed') return '`' + getTextFromText(text.text) + '`'
