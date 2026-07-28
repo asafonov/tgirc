@@ -14,9 +14,19 @@ const getTextFromText = text => {
   if (text.className === 'TextItalic') return `*${getTextFromText(text.text)}*`
   if (text.className === 'TextFixed') return '`' + getTextFromText(text.text) + '`'
   if (text.className === 'TextConcat') return text.texts.map(getTextFromText).join('')
+  if (text.className === 'TextUrl') return `${getTextFromText(text.text)} (${text.url})`
+  if (text.className === 'TextEmpty') return ''
+
+  return text.text || ''
+}
+
+const getTextFromTable = block => {
+  const title = getTextFromText(block.title)
+  return (title ? title + '\n\n' : '') + block.rows.map(row => row.cells.map(getTextFromBlock).join(' | ')).join('\n')
 }
 
 const getTextFromBlock = block => {
+  if (block.className === 'PageBlockTable') return getTextFromTable(block)
   if (block.text) return getTextFromText(block.text)
   if (block.items) return block.items.map(getTextFromBlock).join('\n')
   if (block.blocks) return block.blocks.map(getTextFromBlock).join('\n')
