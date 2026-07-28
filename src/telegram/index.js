@@ -18,7 +18,7 @@ const getTextFromText = text => {
 
 const getTextFromBlock = block => {
   if (block.text) return getTextFromText(block.text)
-  if (block.items) = return block.items.map(getTextFromBlock).join('\n')
+  if (block.items) return block.items.map(getTextFromBlock).join('\n')
   if (block.blocks) return block.blocks.map(getTextFromBlock).join('\n')
   return ''
 }
