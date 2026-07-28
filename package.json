@@ -3,9 +3,9 @@
     "input": ">=1.0.1",
     "teleproto": ">=1.228.4"
   },
-  "name": "tgirc",
+  "name": "@asafonov/tgirc",
   "description": "tgirc is a bridge between telegram and irc so you can chat with your friends on telegram using your favorite irc client.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "app.js",
   "bin": {
     "tgirc": "./app.js"
