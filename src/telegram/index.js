@@ -8,6 +8,21 @@ const alias = require('../config').init('alias')
 let client
 const chatCache = {}
 
+const getTextFromText (text) {
+  if (text.className === 'TextPlain') return text.text
+  if (text.className === 'TextBold') return `**${getTextFromText(text.text)}**`
+  if (text.className === 'TextItalic') return `*${getTextFromText(text.text)}*`
+  if (text.className === 'TextFixed') return '`' + getTextFromText(text.text) + '`'
+  if (text.className === 'TextConcat') return text.texts.map(getTextFromText).join('')
+}
+
+const getTextFromBlock = block => {
+  if (block.text) return getTextFromText(block.text)
+  if (block.items) = return block.items.map(getTextFromBlock).join('\n')
+  if (block.blocks) return block.blocks.map(getTextFromBlock).join('\n')
+  return ''
+}
+
 const getMessage = async message => {
   const sender = await message.getSender()
   const chat = await message.getChat()
@@ -17,7 +32,7 @@ const getMessage = async message => {
 
   if (chat?.id) chatCache[chatKey] = chat.id
 
-  const text = message.text || message.richMessage?.blocks?.map(i => i.text?.text).join('\n') || ''
+  const text = message.text || getTextFromBlock(message.richMessage) || ''
 
   return {
     text,
