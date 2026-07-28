@@ -8,7 +8,7 @@ const alias = require('../config').init('alias')
 let client
 const chatCache = {}
 
-const getTextFromText (text) {
+const getTextFromText = text => {
   if (text.className === 'TextPlain') return text.text
   if (text.className === 'TextBold') return `**${getTextFromText(text.text)}**`
   if (text.className === 'TextItalic') return `*${getTextFromText(text.text)}*`
