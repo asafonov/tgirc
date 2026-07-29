@@ -16,7 +16,9 @@ const getTextFromText = text => {
   if (text.className === 'TextFixed') return '`' + getTextFromText(text.text) + '`'
   if (text.className === 'TextConcat') return text.texts.map(getTextFromText).join('')
   if (text.className === 'TextUrl') return `${getTextFromText(text.text)} (${text.url})`
+  if (text.className === 'TextAutoUrl') return getTextFromText(text.text)
   if (text.className === 'TextEmpty') return ''
+  if (text.text?.className) return getTextFromText(text.text)
 
   return text.text || ''
 }
